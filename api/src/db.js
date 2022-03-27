@@ -32,15 +32,21 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Country, Continents, Capitals } = sequelize.models;
+const { Country, Continents, Capitals, Currencies, Timezones } = sequelize.models;
 console.log(sequelize.models)
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-Country.belongsToMany(Continents, { through: 'Contry_Continents', uniqueKey:'continent' });
-Continents.belongsToMany(Country, { through: 'Contry_Continents', uniqueKey:'continent' });
+Country.belongsToMany(Continents, { through: 'Country_Continents' });
+Continents.belongsToMany(Country, { through: 'Country_Continents' });
 
 Country.hasMany(Capitals, { foreignKey: 'capital' });
-Capitals.belongsTo(Country);
+Capitals.belongsTo(Country, { foreignKey: 'capital' });
+
+Country.hasMany(Currencies, { foreignKey: 'currencies' });
+Currencies.belongsTo(Country, { foreignKey: 'currencies'});
+
+Country.belongsToMany(Timezones, { through: 'Country_Timezone' });
+Timezones.belongsToMany(Country, { through: 'Country_Timezone' });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

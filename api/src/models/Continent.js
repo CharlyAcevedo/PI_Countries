@@ -5,9 +5,10 @@ class Continents extends Model {};
 module.exports = (sequelize) => {
     return Continents.init(
         {
-            continent: { 
+            continent_id: { 
                 type: DataTypes.INTEGER,
                 unique: true,
+                autoIncrement: true,
                 primaryKey: true
             },
             continent_name: {
@@ -15,6 +16,6 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 unique: true
             },
-        },{ sequelize, tableName: 'continents' }
+        },{ sequelize, timestamps: false, tableName: 'continents' }
     );
 };
