@@ -1,24 +1,27 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Capitals extends Model {};
+class Language extends Model { };
 
 module.exports = (sequelize) => {
-    return Capitals.init(
+    return Language.init(
         {
-            capital_id: {
+            language_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 unique: true,
                 autoIncrement: true,
                 primaryKey: true
             },
-            capital_name: {
-                type: DataTypes.STRING,
+            language_code: {
+                type: DataTypes.STRING(3),
                 allowNull: false
             },
+            language_name: {
+                type: DataTypes.STRING
+            },
             country_id: {
-                type: DataTypes.STRING,
+                type: DataTypes.STRING
             }
-        },{ sequelize, timestamps: false, tableName: 'capitals' }
+        },{ sequelize, timestamps: false, tableName: 'language' }
     );
 };

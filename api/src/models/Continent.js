@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Continents extends Model {};
+class Continent extends Model {};
 
 module.exports = (sequelize) => {
-    return Continents.init(
+    return Continent.init(
         {
             continent_id: { 
                 type: DataTypes.INTEGER,
@@ -16,6 +16,6 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 unique: true
             },
-        },{ sequelize, timestamps: false, tableName: 'continents' }
+        },{ sequelize, timestamps: false, tableName: 'continent' }
     );
 };

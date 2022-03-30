@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require('sequelize');
-const Continent = require('./Continent');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 
@@ -11,13 +10,10 @@ module.exports = (sequelize) => {
     {
       country_id: {
         type: DataTypes.STRING(3),
+       // type: DataTypes.INTEGER,
+        //autoIncrement: true,
         allowNull: false,
-        primaryKey: true,
-        unique: true,
-        validate: {
-          isAlpha: true,
-          len: [2,4]
-        }
+        primaryKey: true
       },
       common_name: {
         type: DataTypes.STRING,
@@ -34,8 +30,13 @@ module.exports = (sequelize) => {
           isUrl: true
         }
       },
+      continent: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
       capital: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
+        allowNull: false
       },
       subregion: {
         type: DataTypes.STRING,
@@ -45,10 +46,7 @@ module.exports = (sequelize) => {
       },
       population: {
         type: DataTypes.INTEGER,
-      },
-      currencies: {
-        type: DataTypes.STRING,
-      },
+      },     
       lat: {
         type: DataTypes.FLOAT,
       },
@@ -71,6 +69,3 @@ module.exports = (sequelize) => {
       tableName: 'country' });
 };
 
-// Country.beforeValidate((country, options) => {
-//   country.country_id.toUpperCase()
-// })
