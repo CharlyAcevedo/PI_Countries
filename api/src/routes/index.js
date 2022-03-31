@@ -4,7 +4,8 @@ const { Op } = require('sequelize')
 const { Activity, Country, Continents, Capitals, Currencies, Languages, Timezones } = require('../db');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const getAllData = require('./country.js');
+const country = require('./country.js');
+const activity = require('./activity.js');
 
 
 const router = Router();
@@ -12,45 +13,12 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.get('/', async (req, res) => {    
-    res.send('aqui va la landing page del back end');
+    res.send('to get info from this api please go to "http://localhost:/countries" or "http://localhost:/activity');
 });
 
-//GET /countries
-
-router.get('/countries', async (req, res) => {
-    const { limit, offset, name } = req.query;
-
-    if (!name) {
-        const allData = await Country.findAll({
-            include: Activity,
-            offset: offset,
-            limit: limit,
-        });
-        res.send(allData);
-    } else {
-        const allData = await Country.findAll({
-            where: {
-                common_name: {
-                    [Op.iLike]: `%${name}%`
-                }
-            },
-            include: Activity,
-            offset: offset,
-            limit: limit,
-        })
-        res.send(allData);
-    }
-
-});
-
-router.get('/countries/:idCountry', async (req, res) => {
-    const {idCountry} = req.params;
-
-    const countryById = await Country.findByPk(idCountry.toUpperCase());
-    res.send(countryById)
-});
-
-
-
+//GET /countries 'todas las rutas de countries se redirige al modulo country en routes
+router.use('/countries', country);
+//GET y POST /activity 'todas las rutas de activity se redirige al modulo activity en routes
+router.use('/activity', activity);
 
 module.exports = router;
