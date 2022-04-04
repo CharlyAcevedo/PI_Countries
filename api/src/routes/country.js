@@ -1,20 +1,33 @@
 const { Router } = require('express');
 const Sequelize = require('sequelize')
 const { Op } = require('sequelize')
-const { Activity, Country, Continents, Capitals, Currencies, Languages, Timezones } = require('../db');
+const { Activity, Country, Continents, Capitals, Currencies, Language, Timezones } = require('../db');
 const router = Router();
 
 router.get('/all', async (req, res) => {
+    const countCountries = await Country.count();
     const allCountriesData = await Country.findAll({
-        include: {
+        order: [['common_name', 'ASC']],
+        include:[ {
             model: Activity,
             attributes: ['activity_name', 'difficulty', 'duration', 'season'],
             through: {
                 attributes: [],
             },
+        },{
+            model: Currencies,            
+        },{
+            model: Language,            
+        },{
+            model: Timezones,            
         },
+    ],
     });
-    allCountriesData ? res.send(allCountriesData) : res.status(404).send('No data found');
+    const response = {
+        totalCountries: countCountries,
+        data: allCountriesData,
+    }
+    response ? res.send(response) : res.status(404).send('No data found');
 })
 
 
@@ -55,6 +68,12 @@ router.get('/', async (req, res) => {
         if (typeof filter === "string" && filter !== "") {
             switch (field) {
                 case "continent":
+                    const counts1 = await Country.count({
+                        where: {
+                            continent: {
+                                [Op.iLike]: filter,
+                            },
+                        }});
                     const allData1 = await Country.findAll({
                         where: {
                             continent: {
@@ -72,10 +91,20 @@ router.get('/', async (req, res) => {
                         offset: offset,
                         limit: limit,
                     });
-                    allData1 ?
-                    res.send(allData1) : res.status(404).send('No data for that query in database');
+                    const response1 = {
+                        total: counts1,
+                        data: allData1
+                    }
+                    response1 ?
+                    res.send(response1) : res.status(404).send('No data for that query in database');
                     break;
                 case "subregion":
+                    const counts2 = await Country.count({
+                        where: {
+                            subregion: {
+                                [Op.iLike]: `%${filter}%`,
+                            },
+                        }});
                     const allData2 = await Country.findAll({
                         where: {
                             subregion: {
@@ -93,8 +122,12 @@ router.get('/', async (req, res) => {
                         offset: offset,
                         limit: limit,
                     });
-                    allData2 ?
-                    res.send(allData2) : res.status(404).send('No data for that query in database');
+                    const response2 = {
+                        total: counts2,
+                        data: allData2
+                    }
+                    response2 ?
+                    res.send(response2) : res.status(404).send('No data for that query in database');
                     break;
                 default:
                     break;
@@ -103,7 +136,8 @@ router.get('/', async (req, res) => {
 
         }
     } else {
-        console.log('paso directo al final', field, filter)
+        console.log('paso directo al final, todos los paises de a 10')
+        const countCountries = await Country.count()
         const allData = await Country.findAll({
             order: [[orderby, order]],
             include: {
@@ -116,7 +150,12 @@ router.get('/', async (req, res) => {
             offset: offset,
             limit: limit,
         });
-        res.send(allData);
+        console.log(countCountries)
+        const response = {
+            totalCountries: countCountries,
+            allData: allData
+        }
+        res.send(response);
     }
 
 

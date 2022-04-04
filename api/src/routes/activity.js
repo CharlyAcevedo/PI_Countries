@@ -18,11 +18,9 @@ router.post('/', async (req, res) => {
         duration,
         season
     })    
-    const countryFound = await Country.findAll({
+    let countryFound = await Country.findAll({
         where: {
-            common_name: {
-                [Op.like]: country,
-            },
+            common_name: country
         },
     })
     activityCreated.addCountry(countryFound);
@@ -30,6 +28,5 @@ router.post('/', async (req, res) => {
     
 })
 
-
-
+    
 module.exports = router;

@@ -24,8 +24,9 @@ const { Continents } =require('./src/db.js')
 
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
   server.listen(3001, async () => {
+    
     const preload = await getCountryData();
     
     console.log('server listening at 3001'); // eslint-disable-line no-console

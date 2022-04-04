@@ -5,9 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url(./img/loading-1.gif);
+  background-image: url(./img/bludark636x353.gif);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 120%;
 }
 
 code {
