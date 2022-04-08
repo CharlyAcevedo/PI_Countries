@@ -1,47 +1,56 @@
 const { Router } = require('express');
 const Sequelize = require('sequelize')
 const { Op } = require('sequelize')
-const { Activity, Country, Continents, Capitals, Currencies, Language, Timezones } = require('../db');
+const { Activity, Country, Currencies, Language, Timezones } = require('../db');
 const router = Router();
 
 router.get('/all', async (req, res) => {
+
     const countCountries = await Country.count();
     const allCountriesData = await Country.findAll({
         order: [['common_name', 'ASC']],
-        include:[ {
+        include: [{
             model: Activity,
             attributes: ['activity_name', 'difficulty', 'duration', 'season'],
             through: {
                 attributes: [],
             },
-        },{
-            model: Currencies,            
-        },{
-            model: Language,            
-        },{
-            model: Timezones,            
+        }, {
+            model: Currencies,
+        }, {
+            model: Language,
+        }, {
+            model: Timezones,
         },
-    ],
+        ],
     });
     const response = {
         totalCountries: countCountries,
-        data: allCountriesData,
+        allData: allCountriesData,
     }
     response ? res.send(response) : res.status(404).send('No data found');
 })
 
 
 router.get('/', async (req, res) => {
-    let { limit, offset, name, order, orderby } = req.query;
-    let { field, filter } = req.body;
-    !limit ? limit = 10 : limit = limit;
-    !offset ? offset = 0 : offset = offset;
-    !order ? order = 'ASC' : order = order;
-    !orderby ? orderby = 'common_name' : orderby = orderby;
-
+    let { name, limit, offset, order, orderby, field, filter } = req.query;
+    !limit ? limit = 10 : limit;
+    !offset ? offset = 0 : offset;
+    !order ? order = 'ASC' : order;
+    !orderby ? orderby = 'common_name' : orderby;
+    !field ? field = 'none' : field;
+    !filter ? filter = 'all' : filter;
+    // console.log(req.body)
 
     if (typeof name === 'string' && name !== "") {
-        //console.log('si paso el name', name);
+        console.log('aqui pasa si hay un name x query', name);
+        const countCountries = await Country.count({
+            where: {
+                common_name: {
+                    [Op.iLike]: `%${name}%`,
+                },
+            }
+        })
         const allData = await Country.findAll({
             where: {
                 common_name: {
@@ -49,31 +58,41 @@ router.get('/', async (req, res) => {
                 },
             },
             order: [[orderby, order]],
-            include: {
+            include: [{
                 model: Activity,
                 attributes: ['activity_name', 'difficulty', 'duration', 'season'],
                 through: {
                     attributes: [],
                 },
-            },
-            offset: offset,
-            limit: limit,
+            }, {
+                model: Currencies,
+            }, {
+                model: Language,
+            }, {
+                model: Timezones,
+            }]
         })
-        allData ?
-            res.send(allData)
-            : res.status(404).send("sorry, we have not found anything with that name in our database");
-
-    } else if (typeof field === "string" && field !== "") {
-        console.log('pasa por aqui', field)
-        if (typeof filter === "string" && filter !== "") {
+        const response = {
+            totalCountries: countCountries,
+            allData: allData
+        }
+        allData && countCountries ?
+            res.send(response)
+            : res.status(404).send("Sorry, we haven't found a country with that name in our database");
+    } else if (typeof field === "string" && field !== "none") {
+        console.log('aqui llega siempre que no hay name pero hay un field')
+        if (typeof filter === "string" && filter !== "all") {
+            console.log('aqui pasa si hay un filter y un field correctos')
             switch (field) {
                 case "continent":
+                    console.log('se filtra por continente')
                     const counts1 = await Country.count({
                         where: {
                             continent: {
-                                [Op.iLike]: filter,
+                                [Op.like]: filter,
                             },
-                        }});
+                        }
+                    });
                     const allData1 = await Country.findAll({
                         where: {
                             continent: {
@@ -81,84 +100,119 @@ router.get('/', async (req, res) => {
                             },
                         },
                         order: [[orderby, order]],
-                        include: {
+                        include: [{
                             model: Activity,
                             attributes: ['activity_name', 'difficulty', 'duration', 'season'],
                             through: {
                                 attributes: [],
                             },
-                        },
-                        offset: offset,
-                        limit: limit,
+                        }, {
+                            model: Currencies,
+                        }, {
+                            model: Language,
+                        }, {
+                            model: Timezones,
+                        }]
                     });
                     const response1 = {
-                        total: counts1,
-                        data: allData1
+                        totalCountries: counts1,
+                        allData: allData1
                     }
                     response1 ?
-                    res.send(response1) : res.status(404).send('No data for that query in database');
+                        res.send(response1) : res.status(404).send('No data for that query in database');
                     break;
                 case "subregion":
+                    console.log('se filtra por subregion')
                     const counts2 = await Country.count({
                         where: {
                             subregion: {
-                                [Op.iLike]: `%${filter}%`,
+                                [Op.like]: filter,
                             },
-                        }});
+                        }
+                    });
                     const allData2 = await Country.findAll({
                         where: {
                             subregion: {
-                                [Op.iLike]: `%${filter}%`,
+                                [Op.like]: filter,
                             },
                         },
                         order: [[orderby, order]],
-                        include: {
+                        include: [{
                             model: Activity,
                             attributes: ['activity_name', 'difficulty', 'duration', 'season'],
                             through: {
                                 attributes: [],
                             },
-                        },
-                        offset: offset,
-                        limit: limit,
+                        }, {
+                            model: Currencies,
+                        }, {
+                            model: Language,
+                        }, {
+                            model: Timezones,
+                        }]
                     });
                     const response2 = {
-                        total: counts2,
-                        data: allData2
+                        totalCountries: counts2,
+                        allData: allData2
                     }
                     response2 ?
-                    res.send(response2) : res.status(404).send('No data for that query in database');
+                        res.send(response2) : res.status(404).send('No data for that query in database');
                     break;
                 default:
                     break;
-
             }
-
+        } else {
+            console.log('aqui pasa si no hay filter o es all')
+            const countCountries = await Country.count()
+            const allData = await Country.findAll({
+                order: [[orderby, order]],
+                include: [{
+                    model: Activity,
+                    attributes: ['activity_name', 'difficulty', 'duration', 'season'],
+                    through: {
+                        attributes: [],
+                    },
+                }, {
+                    model: Currencies,
+                }, {
+                    model: Language,
+                }, {
+                    model: Timezones,
+                }],
+            });
+            const response = {
+                totalCountries: countCountries,
+                allData: allData
+            }
+            res.send(response);
         }
     } else {
-        console.log('paso directo al final, todos los paises de a 10')
+        console.log('aqui pasa si no hay field ni name')
         const countCountries = await Country.count()
         const allData = await Country.findAll({
             order: [[orderby, order]],
-            include: {
+            include: [{
                 model: Activity,
                 attributes: ['activity_name', 'difficulty', 'duration', 'season'],
                 through: {
                     attributes: [],
                 },
+            }, {
+                model: Currencies,
+            }, {
+                model: Language,
+            }, {
+                model: Timezones,
             },
-            offset: offset,
-            limit: limit,
+            ],
         });
-        console.log(countCountries)
+        console.log('respuesta a all', countCountries)
         const response = {
             totalCountries: countCountries,
             allData: allData
         }
         res.send(response);
     }
-
-
 });
 
 router.get('/:idCountry', async (req, res) => {
@@ -167,13 +221,20 @@ router.get('/:idCountry', async (req, res) => {
     const countryById = await Country.findByPk(
         idCountry.toUpperCase(),
         {
-            include: {
+            include:[ {
                 model: Activity,
                 attributes: ['activity_name', 'difficulty', 'duration', 'season'],
                 through: {
                     attributes: [],
                 },
-            }
+            },{
+                model: Currencies,            
+            },{
+                model: Language,            
+            },{
+                model: Timezones,            
+            },
+        ],
         });
     if(countryById) {
         res.send(countryById);

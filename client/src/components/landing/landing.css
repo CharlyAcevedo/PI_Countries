@@ -58,10 +58,10 @@
 
 .img_container{
    padding: 1.5rem 1.5rem;
-   width: 40vw;
-   margin: auto;
+   width: 30vw;
    height: 30vw;
-   background-image: url("../../img/giramundo.gif");
+   margin: auto;
+   /* background-image: url("../../img/giramundo.gif");
    background-repeat: no-repeat;
-   background-size: contain;
+   background-size: contain; */
 }

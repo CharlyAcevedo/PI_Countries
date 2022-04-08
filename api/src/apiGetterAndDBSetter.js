@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { Country, Continent, Capitals, Currencies, Language, Timezones } = require('./db.js')
+const { Country, Capitals, Currencies, Language, Timezones } = require('./db.js')
 
 
 
@@ -9,26 +9,10 @@ const getCountryData = async () => {
 
         const check = await Country.findAll();
 
-        if (Array.isArray(check) && check.length > 0) {
-        return check
-        }
+        if (Array.isArray(check) && check.length > 0) return console.log('Database is set and ready to serve!!  :)');
 
-        const apiCountries = await axios.get('https://restcountries.com/v3/all'); //Se hace un get a la api para obtener toda la informacion de todos los paises disponibles la info queda guardada en apiCountries.data.
-        //console.log(apiCountries.data[0])
-
-        //aqui se meten los valores a la base de datos en la tabla countries.
-        
-        
-        // const createContinents = await Promise.all( //setea los valores en la tabla continents
-        //     continentData.map((c) => {                
-            //         Continents.findOrCreate({
-                //             where: {
-                    //                 continent_name: c
-                    //             }
-                    //         })
-        //     })
-        // );        
-
+        const apiCountries = await axios.get('https://restcountries.com/v3.1/all'); //Se hace un get a la api para obtener toda la informacion de todos los paises disponibles la info queda guardada en apiCountries.data.
+ 
         const getCountries = () => { //En esta función que crea un array de objetos con los datos necesarios tomados de la respuesta de la api para llenar la info del pais en la base de datos.
             let allCountries = []; // se crea la variable con un array vacio
             apiCountries.data.map(country => { //se recorren los datos con un map
@@ -39,7 +23,7 @@ const getCountryData = async () => {
 
                     official_name: country.name.official, // en este otro el oficial.
                     
-                    flag_image_svg: country.flags[0], //hay igual dos archivos con la imagen de las banderas en la api, uno en formato svg y otro en formato png, aqui decidí tomar el svg ya que por ser una imagen vecorial se pueden hacer muchas cosas bonitas con esta imagen desde el front.
+                    flag_image_svg: country.flags.svg, //hay igual dos archivos con la imagen de las banderas en la api, uno en formato svg y otro en formato png, aqui decidí tomar el svg ya que por ser una imagen vecorial se pueden hacer muchas cosas bonitas con esta imagen desde el front.
                     
                     continent1: country.region ? country.region : country.continent[0],
                     
@@ -62,110 +46,10 @@ const getCountryData = async () => {
             return allCountries; //devuelve el arreglo ya con la info lista para ingresar a la api.
         };
 
-        const countriesData = await getCountries();
-        console.log(countriesData[0]);
-        const createCountries = Country.bulkCreate(countriesData);
-        
-     
-        const getContinents = () => { //creo una funcion que crea un array conteniendo todos los continentes de la api y luego los vuelve unicos para alojarlos en la tabla continentes.
-
-            let allContinents = [];
-            let relationCountryContinent = [];
-            apiCountries.data.map(country => { //mapea y agrega todos los continentes a un arreglo
-                allContinents.push(...country.continents);
-                country.continents.forEach(c => {
-                    let newRelation = {
-                        country_id: country.cca3,
-                    }                    
-                    let idContinent = () => {
-                        switch (c) {
-                            case 'Africa':
-                                newRelation.continent_id = 1;
-                                break;
-                            case 'Europe':
-                                newRelation.continent_id = 2;
-                                break;
-                            case 'Antartica':
-                                newRelation.continent_id = 3;
-                                break;
-                            case 'Oceania':
-                                newRelation.continent_id = 4;
-                                break;
-                            case 'Asia':
-                                newRelation.continent_id = 5;
-                                break;
-                            case 'South America':
-                                newRelation.continent_id = 6;
-                                break;
-                            case 'North America':
-                                newRelation.continent_id = 7;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    idContinent();
-                    relationCountryContinent.push(newRelation);
-                })
-            });
-            //aqui se hacen unicos los valores al meterlos a un set.
-            const uniqueContinents = new Set(allContinents); 
-            //usar si se utiliza la funcion con Continents.findOrCreate
-            //let arrayUnique = [...uniqueContinents];
-            let arrayUnique = [];
-            //si se utiliza bulkCreate se debe crear un arreglo con objetos como sigue
-            uniqueContinents.forEach((c)=>{
-                let newContinent = {
-                    continent_name: c
-                };
-                arrayUnique.push(newContinent);
-            })
-
-            // console.log(relationCountryContinent)
-            return [arrayUnique, relationCountryContinent]
-        };
-        //se obtienen las variables con los arreglos correspondientes a los continentes unicos y a las relaciones de continente con pais
-        const [continentData, relationCountryContinent] = await getContinents();
-        //console.log(continentData)
-        const createContinents = Continent.bulkCreate(continentData) 
-        
-
-        const getCapitals = () => { //creo una funcion que crea un array conteniendo las capitales de todos los paises de la api con el id unico de cada pais en forma de un objeto, para posteriormente setear la tabla capitales mediante estos objetos par valor. ejemplo es un array de este tipo de objetos { country_id: 'USA', capital_name: 'Washington, D.C.' }.
-
-            let allCapitals = [];
-            apiCountries.data.map(country => {
-                if (country.capital) {
-                    country.capital.map(capital => {
-                        let newCapital = {
-                            country_id: country.cca3,
-                            capital_name: capital
-                        };
-                        allCapitals.push(newCapital);
-                    });                    
-                }else {
-                    let newCapital = {
-                        country_id: country.cca3,
-                        capital_name: `${country.name.common} capital is not listed`
-                    };
-                    allCapitals.push(newCapital);
-                }
-            });
-            return allCapitals;
-        };
-        const dataCapitals = await getCapitals()
-        // const createCapitals = Capitals.bulkCreate(dataCapitals)
-
-
-        const createCapitals = await Promise.all(
-           dataCapitals.map((c) => {                
-                Capitals.findOrCreate({
-                    where: {
-                        capital_name: c.capital_name,
-                        country_id: c.country_id
-                    }
-                })
-            })
-        );
+        const countriesData = getCountries();
+        // console.log(countriesData[0]);
+        const createCountries = await Country.bulkCreate(countriesData);
+  
 
         const getCurrencies = () => {
             let allCurrencies = [];
@@ -192,8 +76,9 @@ const getCountryData = async () => {
             });
             return allCurrencies;
         };
-        const dataCurrencies = await getCurrencies();
-        const createCurrencies = Currencies.bulkCreate(dataCurrencies);        
+        const dataCurrencies = getCurrencies();
+        // console.log(dataCurrencies);
+         const createCurrencies = await Currencies.bulkCreate(dataCurrencies);        
 
 
         const getLanguages = () => {
@@ -218,8 +103,8 @@ const getCountryData = async () => {
             });
             return allLanguages;
         };
-        const dataLanguages = await getLanguages();
-        const createLanguages = Language.bulkCreate(dataLanguages)
+        const dataLanguages = getLanguages();
+        const createLanguages = await Language.bulkCreate(dataLanguages)
 
         
         const getTimezones = () => {
@@ -244,9 +129,9 @@ const getCountryData = async () => {
             return allTimezones;
         };
         
-        const dataTimezone = await getTimezones();
+        const dataTimezone = getTimezones();
         // console.log(dataTimezone);
-        const createTimezones = Timezones.bulkCreate(dataTimezone)
+        const createTimezones = await Timezones.bulkCreate(dataTimezone)
 
         
     } catch (error) {

@@ -40,12 +40,6 @@ const { Country, Activity, Continent, Capitals, Currencies, Timezones, Language 
 Country.belongsToMany(Activity, { through: 'countries_activities' });
 Activity.belongsToMany(Country, { through: 'countries_activities' });
 
-Country.belongsToMany(Continent, { through: 'Country_Continents' });
-Continent.belongsToMany(Country, { through: 'Country_Continents' });
-
-Country.hasMany(Capitals, { foreignKey: 'country_id' });
-Capitals.belongsTo(Country, { foreignKey: 'country_id' });
-
 Country.hasMany(Currencies, { foreignKey: 'country_id' });
 Currencies.belongsTo(Country, { foreignKey: 'country_id'});
 
