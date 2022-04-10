@@ -1,0 +1,62 @@
+
+
+.country_bitCard{
+    margin: 1vw 1vw 1vw 1vw;    
+    padding: .5rem .5rem .5rem .5rem;
+    width: 15vw;
+    height: 15vw;
+    background: #095379;
+    background: linear-gradient(180deg, rgba(9,83,121,0.927608543417367) 0%, rgba(41,141,193,1) 44%, rgba(9,83,121,0.8827906162464986) 100%);
+    text-align: center;
+    border: 3px solid #032d42c8;
+    border-radius: 20px;
+    box-shadow: 5px 5px 4px #032d42c8;
+}
+
+.country_bitCard:hover{
+    background: #095379;
+    background: linear-gradient(90deg, #0c6c9ced 0%, #32a3e0 44%, #0c6c9ced 100%);
+    box-shadow: 8px 8px 6px #074767c8;
+    border: 5px solid #0a5174c8;
+}
+
+.country_bitHeder{
+    width: 100%;
+    height: 60%;
+    overflow: hidden;    
+    border-radius: 20px;
+}
+
+.country_bitFlag{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    cursor: pointer;
+}
+
+.country_bitText{
+    color: #bbd7fa;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: none;
+}
+
+.country_bitInside{
+    margin-top: .5rem;
+    text-shadow: 2px 2px 2px #032d42c8;        
+}
+
+#country_id{
+    font-size: 1vw;
+    text-align: left;
+    /* float: left; */
+}
+
+#country_name{
+    font-size: 1.5vw;
+    text-align: center;
+}
+
+#country_continent{
+    font-size: 1.2vw;
+}

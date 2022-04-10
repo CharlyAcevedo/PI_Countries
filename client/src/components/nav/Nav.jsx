@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { countriesFiltersAndOrders, searchCountries, getAllCountriesData } from '../../actions/index';
@@ -86,7 +86,7 @@ export default function Nav() {
       dispatch(getAllCountriesData())
     } else {
       setCurrentSearch(e.target.value)
-      console.log(e.target.value)
+      console.log('aqui llega', e.target.value)
       dispatch(searchCountries(e.target.value))
 
     }
@@ -96,7 +96,7 @@ export default function Nav() {
     <nav className='nav_Bar'>
       <section className='nav_container'>
         <img className='nav_Icon' src={giramundoblaco} alt="" />
-        <p className='nav_title'>Henry's & Charly Countries App</p>
+        <p className='nav_title'>App de Paises del Mundo</p>
         <input onChange={(e) => handleChange(e)} className='nav_input' type="search" value={currentSearch}/>
         <img className='img_search' src={search} alt='search' />
         <ul className='nav_links'>
@@ -107,10 +107,10 @@ export default function Nav() {
             <p className='link_Nav' >Actividades<img className='menu_arrow' src={arrow} alt='an arrow' /></p>
             <ul className='nav_nesting_menu'>
               <li className='nav_link nav_link_inside'>
-                <Link className='link_Nav' to="/activities" >Todas</Link>
+                <Link className='link_Nav nav_link_inside' to="/home/activities" >Todas</Link>
               </li>
               <li className='nav_link nav_link_inside'>
-                <Link className='link_Nav' to="activities/create_activity" >Crear</Link>
+                <Link className='link_Nav nav_link_inside' to="/home/activities/create_activity" >Crear</Link>
               </li>
             </ul>
           </li>

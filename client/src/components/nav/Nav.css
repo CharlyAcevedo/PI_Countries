@@ -55,7 +55,7 @@
 .img_search{
     position: absolute;
     top:2.4rem;
-    left: 5.2rem;    
+    left: 26vw;    
 }
 
 .img_search:hover{
@@ -100,6 +100,11 @@
     text-shadow: 2px 2px 2px #095379;
     text-decoration: none;
     padding: 30px 100px 30px 20px;
+}
+
+.nav_link_inside:hover{
+    background: rgb(9,83,121);
+    background: linear-gradient(60deg, #136c99ed 0%, #44a9df 44%, #136c99ed 100%);
 }
 
 .menu_arrow{

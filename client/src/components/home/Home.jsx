@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllCountries, getAllCountriesData } from '../../actions'
+import { getAllCountriesData } from '../../actions';
 import { Link } from 'react-router-dom';
 import CountryCard from '../countryCard/CountryCard';
 import Paginated from '../paginated/Paginated'
 import './home.css';
 
 export default function Home() {
-
+ 
     const dispatch = useDispatch();
     
     // const allCountriesData = useSelector(state => state.allCountriesData);
     const countriesToShow = useSelector(state => state.countriesToShow);
-    // const countriesPage = useSelector(state => state.countries);
-    // const totalCountries = useSelector(state => state.totalCountries);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [countriesXPage, setCountriesXPage] = useState(10);
@@ -30,14 +28,25 @@ export default function Home() {
     useEffect(() => { 
         // dispatch(getAllCountries()) 
         dispatch(getAllCountriesData()) // eslint-disable-next-line
-    },[]) 
+    },[]);
     
-
+    function handlePageSelect(e){
+        e.preventDefault();
+        setCountriesXPage(e.target.value)
+    }
     
     return (
         <div className="home">
             <Paginated className='paginated' totalCountriesAll={countriesToShow} countriesXPage={countriesXPage} pagination={pagination}/>
-            <div className="home_title">Bienvenidos a la App de Paises del Mundo con Actividades Turisticas</div>
+            <select className='select_page' value={countriesXPage} onChange={(e) =>handlePageSelect(e)}>
+                <option value='8'>8</option>
+                <option value='9'>9</option>
+                <option value='10'>10</option>
+                <option value='11'>11</option>
+                <option value='12'>12</option>
+            </select>
+            <label className='select_page_label'>Paises por pagina a mostrar:</label>
+            <div className="home_title">Bienvenidos a la App de Paises del Mundo</div>
             <div className='card_container'>
             {countriesForShow.length && countriesForShow.map((c) => {
                 return (

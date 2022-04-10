@@ -14,6 +14,20 @@
     z-index: 5;
 }
 
+.select_page{
+    position: relative;
+    float: right;
+    top: 8rem;
+    margin-right: 1rem;
+}
+
+.select_page_label{
+    position: relative;
+    float: right;
+    top: 8rem;
+    margin-right: .5rem;
+}
+
 .home_title{
     position: relative;
     margin: auto;
@@ -24,7 +38,6 @@
     font-weight: bold;
     text-shadow: 2px 2px 2px #171c21;
     z-index: 6;
-
 }
 
 .paginated{
@@ -34,7 +47,7 @@
     width: 80vw;
 }
 
-.card_container{
+.card_container {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -46,6 +59,7 @@
     max-width: 1500px;
     height: 100%;
     z-index: 7;
+
 }
 
 .cards{

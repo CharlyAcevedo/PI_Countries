@@ -1,0 +1,130 @@
+
+.create_title{
+    position: relative;
+    margin: auto;
+    padding: 0.5em 0.5em 0.5em;
+    text-align: center;
+    width: 80%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2vw;
+    font-weight: bold;
+    color: #fbe6ba;
+    text-shadow: 2px 2px 2px #171c21;
+    background: #122334a3;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px #171c21;
+    z-index: 6;
+}
+
+.text_container{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    top: 6.5rem;
+    width: 98vw;
+    max-width: 1500px;
+    height: 100%;
+    z-index: 7;
+}
+
+.text_p{
+    position: relative;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 1.2vw;
+    font-weight: bold;
+    color: #fbe6ba;
+    flex-wrap: wrap;
+    top: 1rem;
+    width: 70vw;
+    max-width: 1500px;
+    height: 100%;
+    background: #122334a3;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px #171c21;
+    z-index: 7;
+}
+
+.warnings{
+    position: relative;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 1.2vw;
+    flex-wrap: wrap;
+    top: 1.5rem;
+    width: 50vw;
+    max-width: 1500px;
+    height: 100%;
+    background: #6e2412a3;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px #171c21;
+    z-index: 7;
+}
+
+.form_container{
+    position: relative;
+    padding: 10px;
+    display: flex;    
+    align-items: center;
+    flex-wrap: wrap;
+    top: 8.5rem;
+    left: .5rem;
+    margin-right: .5rem;
+    width: 95vw;
+    max-width: 1500px;
+    height: 100%;
+    border: 3px solid #ccc;
+    background: #122334a3;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px #171c21;
+    z-index: 7;
+}
+
+.btn_submit{
+    position: relative;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: 15vw;
+    height: 2vw;
+    background: #095379;
+    background: linear-gradient(180deg, #095379ed 0%, #298dc1 44%, #095379e1 100%);
+}
+
+.btn_submit:hover{
+    background: #095379;
+    background: linear-gradient(90deg, #0e85c0ed 0%, #39a8e3 44%, #0e85c0ed 100%);
+}
+
+.label_form{
+    position: relative;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: row;
+}
+
+.input_form{
+    width: 60vw;
+}
+
+.card_container{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 98vw;
+    max-width: 1500px;
+    height: 100%;
+    z-index: 7;
+}
+
+.bit_btn{
+    background:none;
+    border:none;
+}
