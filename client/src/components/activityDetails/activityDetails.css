@@ -1,0 +1,42 @@
+
+.id_and_name_activity{
+    position: relative;
+    text-align: center;
+}
+
+.countries_container{
+    position: relative;
+    display: flex;
+    /* float: left; */
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 6px solid #ccc;
+    border-radius: 20px;
+}
+
+.title_country_container{    
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-top: 1.5rem; 
+    margin: auto;
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+    align-items: center;
+    width: 80vw;
+    color: #ccc;
+    background: rgb(9,83,121);
+    background: linear-gradient(60deg, #136c99ed 0%, #44a9df 44%, #136c99ed 100%);
+}
+
+/* .countries_holder{
+    display: flex;
+    flex-direction: column;
+    float: left;
+    position: relative;
+} */

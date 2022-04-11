@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { countriesFiltersAndOrders, searchCountries, getAllCountriesData } from '../../actions/index';
-import giramundoblaco from './giramundoblaco.gif'
+import giramundoblaco from './giramundoblaco.gif';
+// import pagination from '../home/Home'
 import search from './search.svg';
 import arrow from './arrow.svg';
 import './Nav.css';
@@ -10,6 +11,7 @@ import './Nav.css';
 export default function Nav() {
 
   const dispatch = useDispatch();
+
 
   const [continentFilter, setContinentFilter] = useState('all');
   const [subregionFilter, setSubregionFilter] = useState('all');

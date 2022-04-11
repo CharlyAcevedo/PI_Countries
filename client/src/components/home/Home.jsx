@@ -10,7 +10,6 @@ export default function Home() {
  
     const dispatch = useDispatch();
     
-    // const allCountriesData = useSelector(state => state.allCountriesData);
     const countriesToShow = useSelector(state => state.countriesToShow);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -25,8 +24,12 @@ export default function Home() {
         setCurrentPage(pageNumber);
     };
     
+    useEffect(() => {
+        setCurrentPage(1)
+    },[countriesToShow])
+
+
     useEffect(() => { 
-        // dispatch(getAllCountries()) 
         dispatch(getAllCountriesData()) // eslint-disable-next-line
     },[]);
     
@@ -63,4 +66,6 @@ export default function Home() {
         </div>
     )
 }
+
+
 

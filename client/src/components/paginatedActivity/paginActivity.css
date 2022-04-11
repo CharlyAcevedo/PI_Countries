@@ -1,0 +1,35 @@
+.pages_container1{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    left: 0;
+    top: 2rem;
+    width: 60vw;
+    max-width: 1200px;
+    z-index: 12;
+}
+
+
+.boton_paginado{
+    list-style: none;
+    width: 8vw;
+    height: 28px;
+    background-color: #34495Ec9;
+}
+
+.btn_primary{
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    background-color: #07415ec9;
+    color: #bbd7fa;
+}
+
+.btn_primary:hover{
+    background-color: #14658d;
+    color: #94bced;
+    box-shadow: 2px 2px 2px #07415e;
+
+}

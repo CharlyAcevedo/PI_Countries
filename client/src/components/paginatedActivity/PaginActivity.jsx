@@ -1,13 +1,13 @@
 import React from 'react';
-import './paginated.css'
+import './paginActivity.css'
 
-export default function Paginated({ totalCountriesAll, countriesXPage, pagination }) {
+export default function Paginated({ activitiesToShow, activitiesPerPage, pagination }) {
 
     const pages = [];
 
-    // console.log('este es paginado', totalCountriesAll);
+    // console.log('este es paginado', activitiesToShow);
 
-    const totalPages = Math.ceil(totalCountriesAll.length/countriesXPage +1);
+    const totalPages = Math.ceil(activitiesToShow.length/activitiesPerPage + 1);
 
     for(let i = 1; i < totalPages; i++) {
         pages.push(i);
@@ -15,7 +15,7 @@ export default function Paginated({ totalCountriesAll, countriesXPage, paginatio
 
     return (
         <nav>
-            <ul className='pages_container'>
+            <ul className='pages_container1'>
                 {
                     pages ? pages.map(page => (
                         <li className='boton_paginado' key={page}>

@@ -5,6 +5,7 @@ import Home from './components/home/Home';
 import CountryDetails from './components/countryDetails/CountryDetails';
 import Activities from './components/activities/Activities';
 import CreateActivity from './components/activities/CreateActivity';
+import ActivityDetails from './components/activityDetails/ActivityDetails'
 
 import './App.css';
 
@@ -17,6 +18,7 @@ function App() {
           <Route exact path='/home' component={Home} />
           <Route exact path='/home/country_detail/:country_id' component={CountryDetails} />
           <Route exact path='/home/activities' component={Activities}/>
+          <Route exact path='/home/activities/:id' component={ActivityDetails}/>
           <Route exact path='/home/activities/create_activity' component={CreateActivity}/>
       </div>
     </Router>

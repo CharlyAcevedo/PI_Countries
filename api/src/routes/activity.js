@@ -22,6 +22,29 @@ router.get('/', async (req, res) => {
     allActivities.length && countActivities ? res.send(response) : res.status(404).send('No Activities found in database')
 })
 
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    // console.log(idCountry)
+    const activityById = await Activity.findByPk(
+        id,
+        {
+            include:[ {
+                model: Country,
+                attributes: ['country_id', 'common_name', 'flag_image_svg'],
+                through: {
+                    attributes: [], 
+                },
+            } 
+        ],
+        });
+    if(activityById) {
+        res.send(activityById);
+    } else {
+        res.status(404).send("Sorry, that activity is'nt in our list");
+    }
+});
+
+
 router.post('/', async (req, res) => {
     const {activity_name, difficulty, duration, season, country} = req.body;
     if(typeof activity_name !== 'string' || activity_name.length <= 2) return res.status(404).send('No se ha creado la actividad por que no se envio un nombre correcto para la actividad')

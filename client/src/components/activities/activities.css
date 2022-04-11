@@ -1,34 +1,93 @@
-.page_activities_container{
+
+.head_container{
     position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;
-    background-color: #34495eca;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
-    z-index: 5;
+    flex-wrap: wrap;
+    top: 6.5rem;
+    width: 98vw;
+    max-width: 1500px;
+    height: 100%;
+    z-index: 7;
 }
 
-.activity_title{    
+.img_activities1{
+    position: absolute;
+    top: 0;
+    right: 0.5em;
+    width: 18vw;
+    border: 3px solid #ccc;
+    border-radius: 20px;
+
+}
+
+.img_activities2{
+    position: absolute;
+    top: 0;
+    left: 0.5em;
+    width: 18vw;
+    border: 3px solid #ccc;
+    border-radius: 20px;
+
+}
+
+.activity_title{
     position: relative;
     margin: auto;
-    top: 7.5rem;
-    width: 80%;
+    padding: 0.5em 0.5em 0.5em;
+    text-align: center;
+    width: 40%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 2vw;
     font-weight: bold;
-    text-shadow: 2px 2px 2px #171c21;
+    color: #ede1c9;
+    text-shadow: 2px 2px 2px #406183;
+    background: #1d38528e;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px #171c21;
     z-index: 6;
 }
 
 .p_activity{
     position: relative;
-    margin: auto;
-    top: 8rem;
-    width: 90%;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 1.2vw;
+    font-weight: bold;
+    color: #fbe6ba;
+    flex-wrap: wrap;
+    margin-top: 0.5em;
+    top: 1rem;
+    width: 60vw;
+    max-width: 1500px;
+    height: 100%;
+    background: #1d38528e;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px #171c21;
+    z-index: 7;
 }
 
-.activity_main{
+.activities_container1{
     position: relative;
-    margin: auto;
-    top: 10rem;
+    padding: 10px;
+    display: flex;    
+    align-items: center;
+    flex-wrap: wrap;
+    top: 9rem;
+    margin-right: 1.5rem;
+    width: 95vw;
+    max-width: 1500px;
+    border: 3px solid #ccc;
+    background: #122334a3;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px #171c21;
+    z-index: 7;
+}
+
+.card_container1{
+    text-decoration: none;
 }

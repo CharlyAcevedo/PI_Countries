@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllCountriesData, postActivities } from '../../actions';
 import CountryBitCard from './activityCards/CountryBitCard'
-import { Link } from 'react-router-dom';
 import './createActivity.css';
 
 export default function CreateActivity() {
@@ -56,7 +55,13 @@ export default function CreateActivity() {
                 const newState = {
                     ...prevState,
                     country: [...prevState.country, e.target.value]
-                }                
+                }
+                setDisabled((prevState) => {
+                    return {
+                        ...prevState,
+                        country: true,
+                    }
+                })                
                 setErrors(validateForm(newState));
                 return newState;
             } else {
@@ -140,7 +145,7 @@ export default function CreateActivity() {
                 value={dataForm.difficulty}
                 onChange={handleChangeForm}
                 >
-                    <option id='desabilitar' selected='true' disabled={disabled.difficulty}>Seleccione la dificultad aquí</option>
+                    <option id='desabilitar' selected disabled={disabled.difficulty}>Seleccione la dificultad aquí</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -156,7 +161,7 @@ export default function CreateActivity() {
                 value={dataForm.duration}
                 onChange={handleChangeForm}
                 >
-                    <option id='desabilitar' selected='true' disabled={disabled.duration}>Seleccione la duración aquí</option>
+                    <option id='desabilitar' selected disabled={disabled.duration}>Seleccione la duración aquí</option>
                     <option value="10 minutos">10 minutos</option>
                     <option value="20 minutos">20 minutos</option>
                     <option value="30 minutos">30 minutos</option>
@@ -177,7 +182,7 @@ export default function CreateActivity() {
                 value={dataForm.season}
                 onChange={handleChangeForm}
                 >
-                    <option id='desabilitar' selected='true' disabled={disabled.season}>Seleccione la estación del año aquí</option>
+                    <option id='desabilitar' selected disabled={disabled.season}>Seleccione la estación del año aquí</option>
                     <option value="Primavera">Primavera</option>
                     <option value="Verano">Verano</option>
                     <option value="Otoño">Otoño</option>
@@ -192,7 +197,7 @@ export default function CreateActivity() {
                 value={actSelCount}
                 onChange={handleChangeForm}
                 >
-                    <option id='desabilitar' selected='true' disabled={disabled.country}>Seleccione el pais aqui</option>
+                    <option id='desabilitar' selected disabled={disabled.country}>Seleccione el pais aqui</option>
                     {
                         countrySelector && countrySelector.map((c) => {
                            return ( <option key={c.name} value={c.name}>{c.name}</option> );

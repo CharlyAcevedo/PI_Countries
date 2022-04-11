@@ -6,19 +6,21 @@ import {
     SEARCH_COUNTRY,
     GET_ALL_ACTIVITIES,
     FILTER_ACTIVITIES_X_COUNTRY,
-    POST_ACTIVITIES
+    POST_ACTIVITIES,
+    GET_ACTIVITY_DETAILS
 } from "../actions";
 
 const initialState = {
     countries: [],
     totalCountries: 0,
-    totalCountriesAll: 0,
+    totalCountriesAll: 0,    
     allCountriesData: [],
     countriesToShow: [],
     countryDetails: {},
     totalActivities: 0,
     allActivities: [],
     activitiesToShow: [],
+    activityDetails: {},
     countriesWhitActivities: [],
     postMessage: '',
 };
@@ -38,7 +40,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
             countriesToShow: payload.allData,
         }
         case GET_COUNTRIES_FILTER_AND_ORDER:
-            console.log('si llega al reducer', payload)
+            // console.log('si llega al reducer', payload)
             return {
                 ...state,
                 totalCountries: payload.totalCountries,
@@ -53,7 +55,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         case GET_COUNTRY_DETAILS:
             console.log('llega al reducer', payload)
             if (payload) {
-                console.log('payload desde reducer', payload)
+                // console.log('payload desde reducer', payload)
                 return {
                     ...state,
                     countryDetails: payload,
@@ -79,7 +81,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
                     if (pais.Activities.find((e) => e.activity_name === 'Shoping')) return pais;
                     else return false;
                 })
-                console.log('este es filter desde reducer', activitiesFiltered);
+                // console.log('este es filter desde reducer', activitiesFiltered);
                 return {
                     ...state,
                     countriesWhitActivities: activitiesFiltered
@@ -87,10 +89,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
             }
             return state
         case POST_ACTIVITIES:
-            console.log('este es el payload desde el reducer', payload)
+            // console.log('este es el payload desde el reducer', payload)
             return {
                 ...state,
                 postMessage: payload.data
+            }
+        case GET_ACTIVITY_DETAILS:
+            return {
+                ...state,
+                activityDetails: payload
             }
         default:
             return state;
