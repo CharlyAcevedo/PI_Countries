@@ -6,7 +6,6 @@ const { Activity, Country, Continents, Capitals, Currencies, Languages, Timezone
 // Ejemplo: const authRouter = require('./auth.js');
 const country = require('./country.js');
 const activity = require('./activity.js');
-const countryExtends = require('./countryxtends.js');
 
 
 const router = Router();
@@ -21,7 +20,5 @@ router.get('/', async (req, res) => {
 router.use('/countries', country);
 //GET y POST /activity 'todas las rutas de activity se redirige al modulo activity en routes
 router.use('/activity', activity);
-//ruta adicional para traer todas las monedas y monedas por pais.
-router.use('/countryxtends', countryExtends);
 
 module.exports = router;

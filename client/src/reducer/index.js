@@ -1,7 +1,6 @@
 import {
     GET_COUNTRY_DETAILS,
     GET_ALL_COUNTRIES,
-    GET_ALL_COUNTRIES_DATA,
     GET_COUNTRIES_FILTER_AND_ORDER,
     SEARCH_COUNTRY,
     GET_ALL_ACTIVITIES,
@@ -13,8 +12,6 @@ import {
 const initialState = {
     countries: [],
     totalCountries: 0,
-    totalCountriesAll: 0,    
-    allCountriesData: [],
     countriesToShow: [],
     countryDetails: {},
     totalActivities: 0,
@@ -26,83 +23,89 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
-    switch (type) {
-        case GET_ALL_COUNTRIES: return {
-            ...state,
-            countries: [...payload.allData],
-            totalCountries: payload.totalCountries,
-            countriesToShow: payload.allData,
-        }
-        case GET_ALL_COUNTRIES_DATA: return {
-            ...state,
-            allCountriesData: [...payload.allData],
-            totalCountriesAll: payload.totalCountries,
-            countriesToShow: payload.allData,
-        }
-        case GET_COUNTRIES_FILTER_AND_ORDER:
-            // console.log('si llega al reducer', payload)
-            return {
-                ...state,
-                totalCountries: payload.totalCountries,
-                countriesToShow: payload.allData
-            }
-        case SEARCH_COUNTRY:
-            return {
-                ...state,
-                totalCountries: payload.totalCountries,
-                countriesToShow: payload.allData
-            }
-        case GET_COUNTRY_DETAILS:
-            console.log('llega al reducer', payload)
-            if (payload) {
-                // console.log('payload desde reducer', payload)
-                return {
-                    ...state,
-                    countryDetails: payload,
-                }
-            } else if (typeof payload === 'string' && payload.length === 3) {
-                let countryToShow = state.countriesToShow.filter(country => country.country_id === payload)
-                return {
-                    ...state,
-                    countryDetails: countryToShow
-                }
-            } else {
-                return state
-            }
-        case GET_ALL_ACTIVITIES: return {
-            ...state,
-            totalActivities: payload.totalActivities,
-            allActivities: payload.allData,
-            activitiesToShow: payload.allData
-        }
-        case FILTER_ACTIVITIES_X_COUNTRY:
-            if (typeof payload === 'string' && payload.length > 0) {
-                let activitiesFiltered = state.allCountriesData.filter(pais => {
-                    if (pais.Activities.find((e) => e.activity_name === 'Shoping')) return pais;
-                    else return false;
-                })
-                // console.log('este es filter desde reducer', activitiesFiltered);
-                return {
-                    ...state,
-                    countriesWhitActivities: activitiesFiltered
-                }
-            }
-            return state
-        case POST_ACTIVITIES:
-            // console.log('este es el payload desde el reducer', payload)
-            return {
-                ...state,
-                postMessage: payload.data
-            }
-        case GET_ACTIVITY_DETAILS:
-            return {
-                ...state,
-                activityDetails: payload
-            }
-        default:
-            return state;
-    }
-
-}
+  switch (type) {
+    case GET_ALL_COUNTRIES:
+      if (payload.error)
+        return {
+          ...state,
+          postMessage: payload.error,
+        };
+      return {
+        ...state,
+        countries: [...payload.allData],
+        totalCountries: payload.totalCountries,
+        countriesToShow: payload.allData,
+      };
+    case GET_COUNTRIES_FILTER_AND_ORDER:
+      if (payload.error)
+        return {
+          ...state,
+          postMessage: payload.error,
+        };
+      return {
+        ...state,
+        totalCountries: payload.totalCountries,
+        countriesToShow: payload.allData,
+      };
+    case SEARCH_COUNTRY:
+      if (payload.error)
+        return {
+          ...state,
+          postMessage: payload.error,
+        };
+      return {
+        ...state,
+        totalCountries: payload.totalCountries,
+        countriesToShow: payload.allData,
+      };
+    case GET_COUNTRY_DETAILS:
+      if (payload.error)
+        return {
+          ...state,
+          postMessage: payload.error,
+        };
+      return {
+        ...state,
+        countryDetails: payload,
+      };
+    case GET_ALL_ACTIVITIES:
+        if (payload.error)
+        return {
+          ...state,
+          postMessage: payload,
+        };
+      return {
+        ...state,
+        totalActivities: payload.totalActivities,
+        allActivities: payload.allData,
+        activitiesToShow: payload.allData,
+      };
+    case FILTER_ACTIVITIES_X_COUNTRY:
+      if (typeof payload === "string" && payload.length > 0) {
+        let activitiesFiltered = state.allCountriesData.filter((pais) => {
+          if (pais.Activities.find((e) => e.activity_name === "Shoping"))
+            return pais;
+          else return false;
+        });
+        return {
+          ...state,
+          countriesWhitActivities: activitiesFiltered,
+        };
+      }
+      return state;
+    case POST_ACTIVITIES:
+      return {
+        ...state,
+        postMessage: payload.data,
+      };
+    case GET_ACTIVITY_DETAILS:
+      return {
+        ...state,
+        activityDetails: payload,
+      };
+    default:
+      return state;
+  }
+};
 
 export default rootReducer;

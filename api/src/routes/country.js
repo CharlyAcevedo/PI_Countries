@@ -11,7 +11,7 @@ router.get('/all', async (req, res) => {
         order: [['common_name', 'ASC']],
         include: [{
             model: Activity,
-            attributes: ['activity_name', 'difficulty', 'duration', 'season'],
+            attributes: [ 'id', 'activity_name', 'difficulty', 'duration', 'season' ],
             through: {
                 attributes: [],
             },
@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
             order: [[orderby, order]],
             include: [{
                 model: Activity,
-                attributes: ['activity_name', 'difficulty', 'duration', 'season'],
+                attributes: ['id', 'activity_name', 'difficulty', 'duration', 'season'],
                 through: {
                     attributes: [],
                 },
@@ -80,9 +80,9 @@ router.get('/', async (req, res) => {
             res.send(response)
             : res.status(404).send("Sorry, we haven't found a country with that name in our database");
     } else if (typeof field === "string" && field !== "none") {
-        console.log('aqui llega siempre que no hay name pero hay un field')
+        // console.log('aqui llega siempre que no hay name pero hay un field')
         if (typeof filter === "string" && filter !== "all") {
-            console.log('aqui pasa si hay un filter y un field correctos')
+            // console.log('aqui pasa si hay un filter y un field correctos')
             switch (field) {
                 case "continent":
                     console.log('se filtra por continente')
@@ -102,7 +102,7 @@ router.get('/', async (req, res) => {
                         order: [[orderby, order]],
                         include: [{
                             model: Activity,
-                            attributes: ['activity_name', 'difficulty', 'duration', 'season'],
+                            attributes: ['id', 'activity_name', 'difficulty', 'duration', 'season'],
                             through: {
                                 attributes: [],
                             },
@@ -139,7 +139,7 @@ router.get('/', async (req, res) => {
                         order: [[orderby, order]],
                         include: [{
                             model: Activity,
-                            attributes: ['activity_name', 'difficulty', 'duration', 'season'],
+                            attributes: ['id', 'activity_name', 'difficulty', 'duration', 'season'],
                             through: {
                                 attributes: [],
                             },
@@ -168,7 +168,7 @@ router.get('/', async (req, res) => {
                 order: [[orderby, order]],
                 include: [{
                     model: Activity,
-                    attributes: ['activity_name', 'difficulty', 'duration', 'season'],
+                    attributes: ['id', 'activity_name', 'difficulty', 'duration', 'season'],
                     through: {
                         attributes: [],
                     },
@@ -193,7 +193,7 @@ router.get('/', async (req, res) => {
             order: [[orderby, order]],
             include: [{
                 model: Activity,
-                attributes: ['activity_name', 'difficulty', 'duration', 'season'],
+                attributes: ['id', 'activity_name', 'difficulty', 'duration', 'season'],
                 through: {
                     attributes: [],
                 },
@@ -223,7 +223,7 @@ router.get('/:idCountry', async (req, res) => {
         {
             include:[ {
                 model: Activity,
-                attributes: ['activity_name', 'difficulty', 'duration', 'season'],
+                attributes: ['id', 'activity_name', 'difficulty', 'duration', 'season'],
                 through: {
                     attributes: [],
                 },

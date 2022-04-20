@@ -1,7 +1,7 @@
 import React from 'react';
 import spring from '../../../img/spring.jpg';
 import summer from '../../../img/summer.jpg';
-import fall from '../../../img/fall.jpg';
+import fall from '../../../img/fall.jpg'; 
 import winter from '../../../img/winter.jpg';
 import './activityCard.css'
 
@@ -12,7 +12,7 @@ const imageToShow = season === 'Primavera' ? spring : season === 'Verano' ? summ
     return (
         <div className="activity_card_container" >
             <header className="activity_heder" >
-                <img className="activity_image" src={imageToShow} />
+                <img className="activity_image" src={imageToShow} alt='Season of the year'/>
             </header>
             <div className="activity_text" >
                 <h5 className="activity_inside" id='activity_name'>{activity_name}</h5>

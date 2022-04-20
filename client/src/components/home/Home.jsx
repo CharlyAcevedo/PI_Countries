@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllCountriesData } from '../../actions';
+import { getAllCountries } from '../../actions';
 import { Link } from 'react-router-dom';
 import CountryCard from '../countryCard/CountryCard';
 import Paginated from '../paginated/Paginated'
@@ -30,7 +30,7 @@ export default function Home() {
 
 
     useEffect(() => { 
-        dispatch(getAllCountriesData()) // eslint-disable-next-line
+        dispatch(getAllCountries()) // eslint-disable-next-line
     },[]);
     
     function handlePageSelect(e){
@@ -41,15 +41,15 @@ export default function Home() {
     return (
         <div className="home">
             <Paginated className='paginated' totalCountriesAll={countriesToShow} countriesXPage={countriesXPage} pagination={pagination}/>
-            <select className='select_page' value={countriesXPage} onChange={(e) =>handlePageSelect(e)}>
+            
+            <label className='select_page_label'>Paises por pagina a mostrar: <select className='select_page' value={countriesXPage} onChange={(e) =>handlePageSelect(e)}>
                 <option value='8'>8</option>
                 <option value='9'>9</option>
                 <option value='10'>10</option>
                 <option value='11'>11</option>
                 <option value='12'>12</option>
-            </select>
-            <label className='select_page_label'>Paises por pagina a mostrar:</label>
-            <div className="home_title">Bienvenidos a la App de Paises del Mundo</div>
+            </select></label>
+            <div className="home_title">Para ver los detalles de un pais da click su tarjeta</div>
             <div className='card_container'>
             {countriesForShow.length && countriesForShow.map((c) => {
                 return (
@@ -62,7 +62,7 @@ export default function Home() {
             })
             }
             </div>
-            <div className="nota_pie">Coded by: Charly, Creado en Henry como PI abril de 2022</div>
+            <footer className="nota_pie">Coded by: Charly, Creado en Henry como PI abril de 2022</footer>
         </div>
     )
 }

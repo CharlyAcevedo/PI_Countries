@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllCountriesData, postActivities } from '../../actions';
+import { getAllCountries, postActivities } from '../../actions';
 import CountryBitCard from './activityCards/CountryBitCard'
 import './createActivity.css';
 
@@ -8,7 +8,7 @@ export default function CreateActivity() {
 
     const dispatch = useDispatch();
 
-    const allCountriesData = useSelector(state => state.allCountriesData);
+    const allCountries = useSelector(state => state.countries);
     const warnings = useSelector(state => state.postMessage)
 
     const [dataForm, setDataForm] = useState({
@@ -17,6 +17,7 @@ export default function CreateActivity() {
         duration: '',
         season: '',
         country: [],
+        countryCardsData: [],
     });
     const [actSelCount, setActSelCount] = useState('');
     const [errors, setErrors] = useState({});
@@ -29,12 +30,14 @@ export default function CreateActivity() {
 
     useEffect(() => {
         setErrors(validateForm(dataForm));
-        dispatch(getAllCountriesData()) // eslint-disable-next-line
+        dispatch(getAllCountries()) // eslint-disable-next-line
     },[]);
 
-    const countrySelector = allCountriesData.map(country => {
+    const countrySelector = allCountries.map(country => {
         return {
-            name: country.common_name,
+            common: country.common_name,
+            flag: country.flag_image_svg,
+            id: country.country_id,
         }
     });
     
@@ -51,10 +54,13 @@ export default function CreateActivity() {
             setActSelCount(e.target.value);
         }
         setDataForm((prevState)=>{
-            if(e.target.name === 'country') {                 
+            if(e.target.name === 'country') {
+                const newBitCardData = countrySelector.filter(country => country.common === e.target.value)
+                console.log('este es newBit',newBitCardData)               
                 const newState = {
                     ...prevState,
-                    country: [...prevState.country, e.target.value]
+                    country: [...prevState.country, e.target.value],
+                    countryCardsData: [...prevState.countryCardsData, newBitCardData]
                 }
                 setDisabled((prevState) => {
                     return {
@@ -84,11 +90,13 @@ export default function CreateActivity() {
     function handleUnselectCountry(e){
         e.preventDefault();
         if(e.target.name !== undefined){
-            const newCountryState = dataForm.country.filter((c) => c !== e.target.name)
+            const newCountryState = dataForm.country.filter((c) => c !== e.target.name);
+            const newBitCardDataState = dataForm.countryCardsData.filter(c => c[0].common !== e.target.name)
             setDataForm((prevState) => {
                 return {
                     ...prevState,
-                    country: newCountryState
+                    country: newCountryState,
+                    countryCardsData: newBitCardDataState,
                 }
             })
         }
@@ -96,7 +104,6 @@ export default function CreateActivity() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch(postActivities(dataForm))
         setDisabled(() => {
             return {
                 difficulty: false,
@@ -115,9 +122,10 @@ export default function CreateActivity() {
             }
         })
         setErrors(validateForm(dataForm));
+        dispatch(postActivities(dataForm))
     };
 
-    console.log(warnings)
+    // console.log(warnings)
 
     return (
         <div className='home'>
@@ -141,6 +149,7 @@ export default function CreateActivity() {
                 <select 
                 className='select_form' 
                 id='select_difficulty'
+                placeholder='Seleccione una dificultad de la lista...'
                 name='difficulty'
                 value={dataForm.difficulty}
                 onChange={handleChangeForm}
@@ -200,15 +209,16 @@ export default function CreateActivity() {
                     <option id='desabilitar' selected disabled={disabled.country}>Seleccione el pais aqui</option>
                     {
                         countrySelector && countrySelector.map((c) => {
-                           return ( <option key={c.name} value={c.name}>{c.name}</option> );
+                           return ( <option key={c.common} value={c.common}>{c.common}</option> );
                         })
                     }
                 </select>
                 <br />
             {
-                dataForm.country && dataForm.country.map( (c) =>{
-                    return (<div className='bit_container' key={c} name={c}>
-                    <button className='bit_btn' onClick={handleUnselectCountry} id={c} name={c}><CountryBitCard  common={c} name={c}/></button>
+                dataForm.countryCardsData && dataForm.countryCardsData.map( (c) =>{
+                    console.log('CardsData desde el map',c[0].common)
+                    return (<div className='bit_container' key={c[0].id} name={c[0].common}>
+                    <button className='bit_btn' onClick={handleUnselectCountry} id={c[0].id} name={c[0].common}><CountryBitCard  common={c[0].common} flag={c[0].flag} id={c[0].id} name={c[0].common}/></button>
                     </div>)
                 })
             }

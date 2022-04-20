@@ -1,19 +1,20 @@
 .pages_container{
     position: fixed;
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     text-align: center;
-    left: 1.5rem;
     top: 5.5rem;
-    width: 80vw;
+    width: 100vw;
     max-width: 1200px;
     z-index: 12;
 }
 
+.ul_container{
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
 .boton_paginado{
+    display: inline;
     list-style: none;
     width: 8vw;
     height: 28px;
@@ -32,5 +33,12 @@
     background-color: #14658d;
     color: #94bced;
     box-shadow: 2px 2px 2px #07415e;
+    cursor: pointer;
+
+}
+
+.btn_primary:focus{
+    background-color: #055f8b;
+    color: #6598d6;
 
 }

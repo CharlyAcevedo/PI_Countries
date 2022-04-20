@@ -2,8 +2,8 @@
 .activity_card_container{
     margin: 1vw 1vw 1vw 1vw;    
     padding: .5rem .5rem .5rem .5rem;
-    width: 15vw;
-    height: 20vw;
+    width: 12vw;
+    height: 16vw;
     background: #095379;
     background: linear-gradient(180deg, rgba(9,83,121,0.927608543417367) 0%, rgba(41,141,193,1) 44%, rgba(9,83,121,0.8827906162464986) 100%);
     text-align: center;
@@ -11,6 +11,7 @@
     border-radius: 20px;
     box-shadow: 5px 5px 4px #032d42c8;
 }
+
 
 .activity_card_container:hover{
     background: #095379;

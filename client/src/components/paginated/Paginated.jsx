@@ -14,8 +14,8 @@ export default function Paginated({ totalCountriesAll, countriesXPage, paginatio
     };
 
     return (
-        <nav>
-            <ul className='pages_container'>
+        <div className='pages_container'>
+            <ul className='ul_container'>
                 {
                     pages ? pages.map(page => (
                         <li className='boton_paginado' key={page}>
@@ -24,6 +24,6 @@ export default function Paginated({ totalCountriesAll, countriesXPage, paginatio
                     )) : <li>0</li>
                 }
             </ul>
-        </nav>
+        </div>
     )
 }

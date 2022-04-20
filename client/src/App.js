@@ -18,8 +18,8 @@ function App() {
           <Route exact path='/home' component={Home} />
           <Route exact path='/home/country_detail/:country_id' component={CountryDetails} />
           <Route exact path='/home/activities' component={Activities}/>
-          <Route exact path='/home/activities/:id' component={ActivityDetails}/>
-          <Route exact path='/home/activities/create_activity' component={CreateActivity}/>
+          <Route exact path='/home/activity_details/:id' component={ActivityDetails}/>
+          <Route exact path='/home/create_activity' component={CreateActivity}/>
       </div>
     </Router>
   );

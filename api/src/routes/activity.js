@@ -5,21 +5,25 @@ const { Activity, Country } = require('../db');
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const countActivities = await Activity.count()
-    const allActivities = await Activity.findAll({
-        include: {
-            model: Country,
-            attributes: ['common_name', 'flag_image_svg', 'continent', 'capital'],
-            through: {
-                attributes:[]
+    try {
+        const countActivities = await Activity.count()
+        const allActivities = await Activity.findAll({
+            include: {
+                model: Country,
+                attributes: ['common_name', 'flag_image_svg', 'continent', 'capital'],
+                through: {
+                    attributes:[]
+                }
             }
+        })
+        const response = {
+            totalActivities: countActivities,
+            allData: allActivities
         }
-    })
-    const response = {
-        totalActivities: countActivities,
-        allData: allActivities
+        res.send(response)
+    } catch (error) {
+        res.status(404).send({ 'error': 'Lo sentimos no se hemos encontrado nada en la base de datos con esos parametros de busqueda' })
     }
-    allActivities.length && countActivities ? res.send(response) : res.status(404).send('No Activities found in database')
 })
 
 router.get('/:id', async (req, res) => {

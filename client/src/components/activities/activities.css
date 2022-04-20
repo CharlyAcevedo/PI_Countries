@@ -71,6 +71,20 @@
     z-index: 7;
 }
 
+.select_page_label1{
+    position: relative;
+    float: right;
+    top: 4.5vh;
+    padding: .5vw 1vw;
+    color: bisque;
+    font-size: 1vw;
+    text-shadow: 2px 2px 2px #171c21;
+    box-shadow: 4px 4px 3px #173044;
+    background-color: #25252540;
+    width: fit-content;
+    border-radius: 20px;
+}
+
 .activities_container1{
     position: relative;
     padding: 10px;

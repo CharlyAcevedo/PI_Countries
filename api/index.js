@@ -20,15 +20,13 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const { getCountryData } = require('./src/apiGetterAndDBSetter.js')
-const { Continents } =require('./src/db.js')
-
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {
-  server.listen(3001, async () => {
+  server.listen(process.env.PORT, async () => {
     
     const preload = await getCountryData();
     
-    console.log('server listening at 3001'); // eslint-disable-line no-console
+    console.log(`server listening at ${process.env.PORT}`); // eslint-disable-line no-console
   });
 });

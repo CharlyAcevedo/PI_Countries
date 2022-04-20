@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { countriesFiltersAndOrders, searchCountries, getAllCountriesData } from '../../actions/index';
+import { countriesFiltersAndOrders, searchCountries, getAllCountries } from '../../actions/index';
 import giramundoblaco from './giramundoblaco.gif';
-// import pagination from '../home/Home'
 import search from './search.svg';
 import arrow from './arrow.svg';
 import './Nav.css';
@@ -20,16 +19,15 @@ export default function Nav() {
   const [currentField, setCurrentField] = useState('continent');
   const [currentFilter, setCurrentFilter] = useState('all')
   const [currentSearch, setCurrentSearch] = useState('')
-  const [orderPrevious, setOrderPrevious] = useState('ASC')
-  const [byPrevious, setByPrevious] = useState('common_name')
+  // const [orderPrevious, setOrderPrevious] = useState('ASC')
+  // const [byPrevious, setByPrevious] = useState('common_name')
 
-  const allCountries = useSelector(state => state.allCountriesData)
+  const allCountries = useSelector(state => state.countries)
 
   const allSubregions = allCountries.map(country => country.subregion)
   const uniqueSubs = new Set(allSubregions)
   const uniqueSubregions = [...uniqueSubs]
 
-  console.log(currentFilter, currentField)
 
   const handleOrder = (e) => {
     let payload = {};
@@ -40,9 +38,9 @@ export default function Nav() {
         order: e.target.value,
         orderBy: currentOrderBy
       }
-      setOrderPrevious(currentOrder)
+      // setOrderPrevious(currentOrder)
       setCurrentOrder(e.target.value)
-      console.log('se cambio el orden de', orderPrevious, ' a ', currentOrder)
+      // console.log('se cambio el orden de', orderPrevious, ' a ', currentOrder)
     } else if(e.target.name === 'orderBy') {
       payload = {
         field: currentField,
@@ -50,9 +48,9 @@ export default function Nav() {
         order: currentOrder,
         orderBy: e.target.value
       }
-      setByPrevious(currentOrderBy)
+      // setByPrevious(currentOrderBy)
       setCurrentOrderBy(e.target.value)
-      console.log('se cambio el orden de', byPrevious, ' a ', currentOrderBy)
+      // console.log('se cambio el orden de', byPrevious, ' a ', currentOrderBy)
     }
     dispatch(countriesFiltersAndOrders(payload));
   }
@@ -85,10 +83,10 @@ export default function Nav() {
     e.preventDefault();
     if(e.target.value === '') {
       setCurrentSearch(e.target.value)
-      dispatch(getAllCountriesData())
+      dispatch(getAllCountries())
     } else {
       setCurrentSearch(e.target.value)
-      console.log('aqui llega', e.target.value)
+      // console.log('aqui llega', e.target.value)
       dispatch(searchCountries(e.target.value))
 
     }
@@ -112,7 +110,7 @@ export default function Nav() {
                 <Link className='link_Nav nav_link_inside' to="/home/activities" >Todas</Link>
               </li>
               <li className='nav_link nav_link_inside'>
-                <Link className='link_Nav nav_link_inside' to="/home/activities/create_activity" >Crear</Link>
+                <Link className='link_Nav nav_link_inside' to="/home/create_activity" >Crear</Link>
               </li>
             </ul>
           </li>

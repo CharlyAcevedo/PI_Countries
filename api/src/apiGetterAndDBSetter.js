@@ -24,31 +24,26 @@ const getCountryData = async () => {
                     official_name: country.name.official, // en este otro el oficial.
                     
                     flag_image_svg: country.flags.svg, //hay igual dos archivos con la imagen de las banderas en la api, uno en formato svg y otro en formato png, aqui decidí tomar el svg ya que por ser una imagen vecorial se pueden hacer muchas cosas bonitas con esta imagen desde el front.
+                                        
+                    continent: country.continents[0], //agrego como continent el primer elemento del array que viene de la api con los continentes del pais
                     
-                    continent1: country.region ? country.region : country.continent[0],
-                    
-                    continent: country.continents[0],
-                    
-                    capital: Array.isArray(country.capital) ? country.capital[0] : country.capital ? country.capital : `${country.name.common} has no capital listed`,
+                    capital: Array.isArray(country.capital) ? country.capital[0] : country.capital ? country.capital : `${country.name.common} has no capital listed`, // se detecto que existen paises en la api que no tienen una capital, o que los datos vienen estructurados de diferente forma, algunos como un array otros como texto, por lo que aqui pongo un ternario que pregunta el tipo de datos que vienen elen campo y dependiendo de su contenido agrega el dato a la base, si no existe agrega un texto aclarativo que dice que no se encontro capital para ese pais.
                     
                     subregion: country.subregion ? country.subregion : `${country.name.common} has no subregion listed`, //como se detecto que desde la api de paises existen paises que no tienen un dato valido de subregion y para cumplir con que este dato no sea nulo se hace una comprobacion si existe el dato se usa y de no existir se agrega un string con el nombre del pais y la leyenda que no se encontro en la lista.
 
-                    area: country.area,
-                    population: country.population,
-                    lat: country.latlng[0],
-                    lng: country.latlng[1],
-                    map: country.maps.googleMaps
-                    
-                    // no estoy incluyendo en esta parte la info ni de capital ni de continente, ya que estos algunos paises tienen varios continentes o tienen mas de una capital, por ello las manejo en tablas adicionales y creo sus relaciones adelante en el codigo.
+                    area: country.area, // se agrega el area del pais
+                    population: country.population, //se agrega el dato de poblacion del pais
+                    lat: country.latlng[0], // se agrega el dato de latitud donde se encuentra el pais, tomado del arreglo en su posicion 0 donde vienen latitud y longitud.
+                    lng: country.latlng[1], // se agrega el dato de longitud donde se encuentra el pais, tomado del arreglo en su posicion 1 donde vienen latitud y longitud.
+                    map: country.maps.googleMaps // se agrega el dato del mapa del pais como un vinculo al sitio googlemaps
                 };
                 allCountries.push(newCountry); //aqui agrego el objeto creado por cada pais al arreglo final que sera devuelto.
             })
             return allCountries; //devuelve el arreglo ya con la info lista para ingresar a la api.
         };
 
-        const countriesData = getCountries();
-        // console.log(countriesData[0]);
-        const createCountries = await Country.bulkCreate(countriesData);
+        const countriesData = getCountries(); //se ejecuta la funcion anterior y se guarda el resultado en la variable para su uso posteior al crear todos los paises en la base de datos.
+        const createCountries = await Country.bulkCreate(countriesData); // con esta instruccion se crean todos los paises de una con el metodo bulkCreate usando la variable con los datos obtenidos en la funcion anterior.
   
 
         const getCurrencies = () => {
@@ -77,7 +72,6 @@ const getCountryData = async () => {
             return allCurrencies;
         };
         const dataCurrencies = getCurrencies();
-        // console.log(dataCurrencies);
          const createCurrencies = await Currencies.bulkCreate(dataCurrencies);        
 
 
@@ -130,17 +124,11 @@ const getCountryData = async () => {
         };
         
         const dataTimezone = getTimezones();
-        // console.log(dataTimezone);
-        const createTimezones = await Timezones.bulkCreate(dataTimezone)
-
-        
+        const createTimezones = await Timezones.bulkCreate(dataTimezone)        
     } catch (error) {
         console.error(error);
     }
 };
-
-
-
 module.exports = {
     getCountryData,     
 }

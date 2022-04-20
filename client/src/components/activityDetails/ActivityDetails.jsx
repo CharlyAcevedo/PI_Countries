@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getActivityDetails, getAllCountriesData } from '../../actions';
+// import { Link } from 'react-router-dom';
+import { getActivityDetails, getAllCountries } from '../../actions';
 import CountryBitCard from '../activities/activityCards/CountryBitCard'
 import turismundo from '../../img/turismundo.jpg'
 import loading from '../../img/loading-1.gif';
@@ -14,14 +14,14 @@ export default function ActivityDetails (props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAllCountriesData())
+        dispatch(getAllCountries())
         dispatch(getActivityDetails(props.match.params.id)); // eslint-disable-next-line
     },[]);
 
     const activityData = useSelector(state => state.activityDetails)
     
-    console.log('esto es params', props.match.params.id);
-    console.log('esto activitiesData', activityData)
+    // console.log('esto es params', props.match.params.id);
+    // console.log('esto activitiesData', activityData)
 
     return (
         <div className='details_container'>
