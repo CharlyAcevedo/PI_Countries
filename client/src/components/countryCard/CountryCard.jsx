@@ -9,9 +9,9 @@ export default function CountryCard({ id, common, continent, flag }) {
                 <img className="country_flag" src={flag} alt="country flag"/>
             </header>
             <div className="country_text">
-                <p className="country_inside" id='country_id'>Code: {id}</p>
-                <h4 className="country_inside" id='country_name'>{common}</h4>
-                <h5 className="country_inside" id='country_continent'>{continent}</h5>
+                <p className="country_inside_card" id='country_id_card'>Code: {id}</p>
+                <h4 className="country_inside_card" id='country_name_card'>{common}</h4>
+                <h5 className="country_inside_card" id='country_continent_card'>{continent}</h5>
             </div>
         </div>
     )

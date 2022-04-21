@@ -2,8 +2,9 @@
 
 .country_card{
     padding: .5rem .5rem .5rem .5rem;
-    width: 22vw;
-    height: 25vw;
+    width: 20vw;
+    height: 22vw;
+    overflow: scroll;
     background: #095379;
     background: linear-gradient(180deg, rgba(9,83,121,0.927608543417367) 0%, rgba(41,141,193,1) 44%, rgba(9,83,121,0.8827906162464986) 100%);
     text-align: center;
@@ -39,22 +40,22 @@
     text-decoration: none;
 }
 
-.country_inside{
+.country_inside_card{
     margin-top: .5rem;
     text-shadow: 2px 2px 2px #032d42c8;        
 }
 
-#country_id{
+#country_id_card{
     font-size: 1vw;
     text-align: left;
     /* float: left; */
 }
 
-#country_name{
+#country_name_card{
     font-size: 1.5vw;
     text-align: center;
 }
 
-#country_continent{
+#country_continent_card{
     font-size: 1.2vw;
 }

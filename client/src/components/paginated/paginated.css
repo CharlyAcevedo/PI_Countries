@@ -34,11 +34,48 @@
     color: #94bced;
     box-shadow: 2px 2px 2px #07415e;
     cursor: pointer;
+}
+
+.btn_primary_active{
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    background-color: #055f8b;
+    color: #6598d6;
 
 }
 
-.btn_primary:focus{
-    background-color: #055f8b;
-    color: #6598d6;
+.btn_prev_next{
+    width: 80px;
+    height: 25px;
+    text-align: center;
+    background-color: #07415ec9;
+    color: #bbd7fa;
+}
+
+.btn_prev_next:hover{
+    background-color: #14658d;
+    color: #94bced;
+    box-shadow: 2px 2px 2px #07415e;
+    cursor: pointer;
+}
+
+.label_current_page{
+    float: left;
+    top: 0rem;
+    font-size: 2vh;
+    padding: .2em;
+    text-align: center;
+    background-color: #07415ec9;
+    color: #bbd7fa;
+}
+
+.current_page_label{
+    float: right;
+    width: 2.5vw;
+    height: 2.7vh;
+    text-align: center;
+    background-color: #bbd7fa;
+    color: #07415ec9;
 
 }

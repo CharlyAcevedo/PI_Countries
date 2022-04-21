@@ -23,6 +23,19 @@ export default function Home() {
     const pagination = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
+    const nextPage = () => {
+        console.log(currentPage)
+        if(currentPage < countriesToShow.length) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
+    const prevPage = () => {
+        console.log(currentPage)
+        if(currentPage !== 1) {
+            setCurrentPage(currentPage - 1)
+        } 
+    }
     
     useEffect(() => {
         setCurrentPage(1)
@@ -39,32 +52,60 @@ export default function Home() {
     }
     
     return (
-        <div className="home">
-            <Paginated className='paginated' totalCountriesAll={countriesToShow} countriesXPage={countriesXPage} pagination={pagination}/>
-            
-            <label className='select_page_label'>Paises por pagina a mostrar: <select className='select_page' value={countriesXPage} onChange={(e) =>handlePageSelect(e)}>
-                <option value='8'>8</option>
-                <option value='9'>9</option>
-                <option value='10'>10</option>
-                <option value='11'>11</option>
-                <option value='12'>12</option>
-            </select></label>
-            <div className="home_title">Para ver los detalles de un pais da click su tarjeta</div>
-            <div className='card_container'>
-            {countriesForShow.length && countriesForShow.map((c) => {
-                return (
-                    <React.Fragment key={c.country_id}>
-                        <Link className="cards" to={`/home/country_detail/${c.country_id}`}>
-                            <CountryCard className="country_card" id={c.country_id} common={c.common_name} continent={c.continent} flag={c.flag_image_svg} />
-                        </Link>
-                    </React.Fragment>
-                );
-            })
-            }
-            </div>
-            <footer className="nota_pie">Coded by: Charly, Creado en Henry como PI abril de 2022</footer>
+      <div className="home">
+        <Paginated
+          className="paginated"
+          totalCountriesAll={countriesToShow}
+          countriesXPage={countriesXPage}
+          currentPage={currentPage}
+          pagination={pagination}
+          nextPage={nextPage}
+          prevPage={prevPage}
+        />
+
+        <label className="select_page_label">
+          Paises por pagina a mostrar:{" "}
+          <select
+            className="select_page"
+            value={countriesXPage}
+            onChange={(e) => handlePageSelect(e)}
+          >
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+        </label>
+        <div className="home_title">
+          Para ver los detalles de un pais da click su tarjeta
         </div>
-    )
+        <div className="card_container">
+          {countriesForShow.length &&
+            countriesForShow.map((c) => {
+              return (
+                <React.Fragment key={c.country_id}>
+                  <Link
+                    className="cards"
+                    to={`/home/country_detail/${c.country_id}`}
+                  >
+                    <CountryCard
+                      className="country_card"
+                      id={c.country_id}
+                      common={c.common_name}
+                      continent={c.continent}
+                      flag={c.flag_image_svg}
+                    />
+                  </Link>
+                </React.Fragment>
+              );
+            })}
+        </div>
+        <footer className="nota_pie">
+          Coded by: Charly, Creado en Henry como PI abril de 2022
+        </footer>
+      </div>
+    );
 }
 
 

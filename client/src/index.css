@@ -6,7 +6,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: url(./img/bludark636x353.gif) no-repeat center center;
   background-size: cover;
-  min-height: 102%;
+  min-height: 100%;
   box-sizing: border-box;
 }
 

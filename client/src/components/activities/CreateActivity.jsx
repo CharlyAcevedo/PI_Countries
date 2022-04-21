@@ -43,7 +43,6 @@ export default function CreateActivity() {
     
 
     function handleChangeForm(e){
-        e.preventDefault();
         if(e.target.name === 'country') {
             setDisabled((prevState) => {
                 return {
@@ -56,11 +55,11 @@ export default function CreateActivity() {
         setDataForm((prevState)=>{
             if(e.target.name === 'country') {
                 const newBitCardData = countrySelector.filter(country => country.common === e.target.value)
-                console.log('este es newBit',newBitCardData)               
+                              
                 const newState = {
                     ...prevState,
-                    country: [...prevState.country, e.target.value],
-                    countryCardsData: [...prevState.countryCardsData, newBitCardData]
+                    country: prevState.country.includes(e.target.value) ? [...prevState.country]: [...prevState.country, e.target.value],
+                    countryCardsData: prevState.countryCardsData.includes(newBitCardData) ? [...prevState.countryCardsData] : [...prevState.countryCardsData, newBitCardData]
                 }
                 setDisabled((prevState) => {
                     return {
@@ -104,6 +103,8 @@ export default function CreateActivity() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        setErrors(validateForm(dataForm));
+        //meter if para validar
         setDisabled(() => {
             return {
                 difficulty: false,
@@ -119,9 +120,9 @@ export default function CreateActivity() {
                 duration: '',
                 season: '',
                 country: [],
+                countryCardsData: [],
             }
         })
-        setErrors(validateForm(dataForm));
         dispatch(postActivities(dataForm))
     };
 
@@ -229,7 +230,7 @@ export default function CreateActivity() {
 
 export function validateForm(input){
     let errors = {};
-    if(!input.activity_name){
+    if(!input.activity_name){ //hacer una regular exrpresion para validar que no haya solo numeros
         errors.activity_name = 'Debe escribir un nombre para la actividad para habilitar la creación';
     } else if(input.activity_name.length < 3) {
         errors.activity_name = 'El nombre de la actividad debe tener por lo menos 3 letras';

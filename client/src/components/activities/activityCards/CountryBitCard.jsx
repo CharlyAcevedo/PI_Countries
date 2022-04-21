@@ -1,4 +1,5 @@
 import React from 'react';
+import './countryBitCard.css'
 
 export default function CountryBitCard({common, flag, id}) {
 
@@ -8,8 +9,8 @@ export default function CountryBitCard({common, flag, id}) {
                 <img className="country_bitFlag" src={flag} alt="country flag" name={common}/>
             </header>
             <div className="country_bitText" name={common}>
-                <p className="country_bitInside" id='country_id' name={common}>Code: {id}</p>
-                <h4 className="country_bitInside" id='country_name' name={common}>{common}</h4>
+                <p className="country_bitInside" id='country_id_bitCard' name={common}>Code: {id}</p>
+                <h4 className="country_bitInside" id='country_name_bitCard' name={common}>{common}</h4>
             </div>
         </div>
     )
